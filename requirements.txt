@@ -1,0 +1,6 @@
+The package requirements for this Python program are as follows:
+- requests
+- bs4 (BeautifulSoup)
+- transformers
+- nltk
+- scikit-learn (sklearn)
