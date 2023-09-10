@@ -5,6 +5,7 @@ from nltk.sentiment import SentimentIntensityAnalyzer
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.cluster import KMeans
 
+
 class NewsWebsite:
     def __init__(self, url, headers):
         self.url = url
@@ -32,15 +33,15 @@ class NewsAggregator:
         self.sources = [
             NewsWebsite('https://www.newswebsite1.com', {
                 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_2) AppleWebKit/537.36 (KHTML, like Gecko) '
-                               'Chrome/79.0.3945.88 Safari/537.36'
+                'Chrome/79.0.3945.88 Safari/537.36'
             }),
             NewsWebsite('https://www.newswebsite2.com', {
                 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_2) AppleWebKit/537.36 (KHTML, like Gecko) '
-                               'Chrome/79.0.3945.88 Safari/537.36'
+                'Chrome/79.0.3945.88 Safari/537.36'
             }),
             NewsWebsite('https://www.newswebsite3.com', {
                 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_2) AppleWebKit/537.36 (KHTML, like Gecko) '
-                               'Chrome/79.0.3945.88 Safari/537.36'
+                'Chrome/79.0.3945.88 Safari/537.36'
             })
         ]
         self.articles = []
@@ -63,7 +64,8 @@ class NewsAggregator:
     def summarize_articles(self):
         for article in self.articles:
             content = article.content.strip()  # Remove leading and trailing white spaces
-            summary = self.summarizer(content, max_length=100, min_length=30, do_sample=False)[0]['summary_text']
+            summary = self.summarizer(
+                content, max_length=100, min_length=30, do_sample=False)[0]['summary_text']
             article.summary = summary.strip()  # Remove leading and trailing white spaces
 
     def analyze_sentiment(self):
@@ -91,7 +93,8 @@ class NewsAggregator:
         cluster_labels = [article.cluster_label for article in self.articles]
         unique_labels = list(set(cluster_labels))
         for label in unique_labels:
-            cluster_articles = [article for article in self.articles if article.cluster_label == label]
+            cluster_articles = [
+                article for article in self.articles if article.cluster_label == label]
             cluster_content = [article.content for article in cluster_articles]
             features = self.vectorizer.fit_transform(cluster_content)
             centroid = self.kmeans.transform(features).mean(axis=0)
